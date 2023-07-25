@@ -34,10 +34,8 @@ bool checkJsonForCloseState() {
 
     // Check if the JSON response contains "state":"close"
     if (payload.indexOf("close") != -1) {
-      Serial.println("Found 'state':'close', closing the relay.");
       return true;
     } else {
-      Serial.println("'state':'close' not found in the JSON response.");
       return false;
     }
   } else {
