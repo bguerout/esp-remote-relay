@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+readonly VAULT_PASSWORD_FILE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/get-vault-password-client.sh"
+
+function encrypt_file {
+  ansible-vault encrypt --vault-password-file="${VAULT_PASSWORD_FILE}" "$@"
+}
+
+function decrypt_file {
+  ansible-vault decrypt --vault-password-file="${VAULT_PASSWORD_FILE}" "$@"
+}
+
+function edit_file {
+  #Prefix with EDITOR="code -w" to edit with vscode
+  ansible-vault edit --vault-password-file="${VAULT_PASSWORD_FILE}" "$@"
+}
+
+function help {
+  echo "Usage: "
+  echo ""
+  echo "  ./ctl ops <task> <args>"
+  echo ""
+  echo "Vault tasks:"
+  echo ""
+  compgen -A function | sort | grep -v -e "^_"
+  echo ""
+}
+
+"${@:-help}"
