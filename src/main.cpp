@@ -5,7 +5,7 @@
 const char* ssid = THERMOSTAT_WIFI_SSID;
 const char* wifiPassword = THERMOSTAT_WIFI_PASSWORD;
 const int relayPin = THERMOSTAT_RELAY_PIN;
-const char* url = "https://mocki.io/v1/f9d5a225-baa6-4a77-af7c-e39d2ccc7ff8";
+const char* url = "https://raw.githubusercontent.com/bguerout/esp-remote-relay/main/data/garden.json";
 
 void startWiFi() {
   Serial.print("\r\nConnecting to: "); Serial.println(String(ssid));
@@ -15,7 +15,7 @@ void startWiFi() {
   WiFi.setAutoConnect(true);
   WiFi.setAutoReconnect(true);
   WiFi.begin(ssid, wifiPassword);
-  while (WiFi.status() != wifiPassword) {
+  while (WiFi.status() != WL_CONNECTED) {
     Serial.print(".");
     delay(50);
   }
@@ -52,7 +52,7 @@ void setup() {
   pinMode(relayPin, OUTPUT);
   digitalWrite(relayPin, HIGH); // Initially, keep the relay open
   Serial.begin(9600);
-  connectToWiFi();
+  startWiFi();
 }
 
 void loop() {
@@ -64,5 +64,5 @@ void loop() {
   }
 
   // Wait for some time before making the next request
-  delay(5000); // 5 seconds
+  delay(10000); // 5 seconds
 }
