@@ -5,7 +5,7 @@
 const char* ssid = THERMOSTAT_WIFI_SSID;
 const char* wifiPassword = THERMOSTAT_WIFI_PASSWORD;
 const int relayPin = THERMOSTAT_RELAY_PIN;
-const char* url = "https://raw.githubusercontent.com/bguerout/esp-remote-relay/main/data/garden.json";
+const char* url = "https://raw.githubusercontent.com/bguerout/esp-remote-relay/main/data/garden";
 
 void startWiFi() {
   Serial.print("\r\nConnecting to: "); Serial.println(String(ssid));
@@ -33,7 +33,7 @@ bool checkJsonForCloseState() {
     http.end();
 
     // Check if the JSON response contains "state":"close"
-    if (payload.indexOf("\"state\":\"close\"") != -1) {
+    if (payload.indexOf("close") != -1) {
       Serial.println("Found 'state':'close', closing the relay.");
       return true;
     } else {
