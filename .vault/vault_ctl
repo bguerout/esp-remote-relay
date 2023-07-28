@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+if ! command -v ansible-vault &> /dev/null; then
+  echo "[ERROR] ansible-vault command is missing"
+  exit
+fi
+
 readonly VAULT_PASSWORD_FILE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/get-vault-password-client.sh"
 
 function encrypt_file {

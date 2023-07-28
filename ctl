@@ -8,23 +8,8 @@ fi
 
 readonly PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-if ! command -v ansible-vault &> /dev/null; then
-  echo "[ERROR] ansible-vault command is missing"
-  exit
-fi
-
-if ! grep "[env]" "${PROJECT_DIR}/.env.ini" &> /dev/null; then
-  echo "****************************"
-  echo "[WARN] env file is encrypted"
-  echo "****************************"
-fi
-
-function clean {
-  pio run -t clean
-}
-
-function test {
-  pio test
+function install {
+  pio pkg install
 }
 
 function dev {
@@ -33,6 +18,10 @@ function dev {
 
 function deploy {
   pio run -e default
+}
+
+function clean {
+  pio run -t clean
 }
 
 function vault {
